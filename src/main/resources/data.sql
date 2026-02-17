@@ -1,6 +1,10 @@
 -- Insert roles if they don't exist
-INSERT INTO roles (name) VALUES ('ROLE_ADMIN') ON CONFLICT (name) DO NOTHING;
-INSERT INTO roles (name) VALUES ('ROLE_CLIENT') ON CONFLICT (name) DO NOTHING;
+INSERT INTO roles (name)
+SELECT 'ROLE_ADMIN'
+WHERE NOT EXISTS (SELECT 1 FROM roles WHERE name = 'ROLE_ADMIN');
+INSERT INTO roles (name)
+SELECT 'ROLE_CLIENT'
+WHERE NOT EXISTS (SELECT 1 FROM roles WHERE name = 'ROLE_CLIENT');
 
 -- Insert default admin user if it doesn't exist
 -- Password is 'password' encoded with BCrypt
