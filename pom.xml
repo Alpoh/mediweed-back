@@ -10,7 +10,7 @@
     </parent>
     <groupId>co.medina.camilo.rivera</groupId>
     <artifactId>mediweed-back</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
     <name>mediweed-back</name>
     <description>mediweed-back</description>
     <url/>
@@ -29,6 +29,7 @@
     <properties>
         <java.version>25</java.version>
         <org.springdoc.version>2.5.0</org.springdoc.version>
+        <assertj.version>3.27.7</assertj.version>
     </properties>
     <dependencies>
         <dependency>
@@ -92,7 +93,7 @@
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <version>3.27.7</version>
+            <version>${assertj.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
