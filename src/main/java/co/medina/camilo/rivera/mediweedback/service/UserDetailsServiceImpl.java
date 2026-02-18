@@ -1,8 +1,10 @@
 package co.medina.camilo.rivera.mediweedback.service;
 
-import co.medina.camilo.rivera.mediweedback.model.User;
-import co.medina.camilo.rivera.mediweedback.repository.UserRepository;
+import co.medina.camilo.rivera.mediweedback.model.Account;
+import co.medina.camilo.rivera.mediweedback.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
+
+import org.jspecify.annotations.NonNull;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,17 +18,17 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private final UserRepository userRepository;
+    private final AccountRepository accountRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username)
+    public UserDetails loadUserByUsername(@NonNull String username) throws UsernameNotFoundException {
+        Account account = accountRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
 
-        List<SimpleGrantedAuthority> authorities = user.getRoles().stream()
+        List<SimpleGrantedAuthority> authorities = account.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toList());
 
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
+        return new org.springframework.security.core.userdetails.User(account.getUsername(), account.getPassword(), authorities);
     }
 }
